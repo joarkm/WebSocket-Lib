@@ -1,17 +1,24 @@
-/*
-*   All control frames MUST have a payload length of 125 bytes or less
-*   and MUST NOT be fragmented.
-*/
 
-class WebSockets {
+using WebSocketLib.Constants;
+
+namespace WebSocketLib {
+    class WebSocket {
 
 
-    public WebSockets() {}
+    public WebSocket() {}
 
-    public void sendPing()
+    public void SendPing()
     {
         //Construct ping frame…
-
+        WebSocketService.ConstructFrame(FrameType.PING);
     }
+
+    public Frame SendPing2()
+    {
+        //Construct ping frame…
+        return WebSocketService.ConstructFrame(FrameType.PING);
+    }
+}
+
 
 }

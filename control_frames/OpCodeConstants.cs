@@ -1,7 +1,8 @@
-namespace WebSocket.Constants {
+namespace WebSocketLib.Constants {
 
     public enum OpCode: byte {
 
+        CONTINUATION_FRAME = 0,
         TEXT = 0x1,
         BINARY = 0x2,
         // 0x3-7 are reserved for further non-control frames

@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
 
-using WebSocket.Constants;
+using WebSocketLib.Constants;
 
-namespace WebSocket{
+namespace WebSocketLib {
 
     // This class is not intended to be used directly
 
@@ -13,20 +13,6 @@ namespace WebSocket{
         public byte RSV1 { get; private set; } = 0x0;
         public byte RSV2 { get; private set; } = 0x0;
         public byte RSV3 { get; private set; } = 0x0;
-        /*
-        /// Setter causes StackOverflow
-
-        public byte OpCode
-        { 
-            get { return OpCode; } 
-            private set
-            {
-                if(!(( AllowedValues.OpCodes.Any (enumType => (byte)enumType == value) )))
-                    throw new ArgumentException("Opcode provided is invalid. Please refer to https://tools.ietf.org/html/rfc6455#section-5.2 for valid opcodes.");            
-                OpCode = value;
-            }
-        }
-        */
 
         public byte OpCode { get; private set; }
         
@@ -51,8 +37,12 @@ namespace WebSocket{
         
         public Frame(byte opcode) {
             if(opcode == (byte)Constants.OpCode.CONNECTION_CLOSE)
-                setFIN(); 
-            OpCode = opcode;
+                setFIN();
+            //Check to see if opcode provided is of any of the allowed values
+            if( AllowedValues.OpCodes.Any(et => (byte)et == opcode) )
+                OpCode = opcode;
+            else
+                throw new ArgumentException("Opcode provided is invalid. Please refer to https://tools.ietf.org/html/rfc6455#section-5.2 for valid opcodes.");
         }
         
         private string ToString(OpCode opcode)
@@ -70,7 +60,6 @@ namespace WebSocket{
                         +   $"Opcode: {_OpCode}";
             
             return res;
-
 
         }
 
