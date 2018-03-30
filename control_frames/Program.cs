@@ -1,7 +1,8 @@
 ﻿using System;
 
-using WebSocketLib.Constants;
 using WebSocketLib;
+using WebSocketLib.Constants;
+using WebSocketLib.Simulation;
 
 class Program
 {
@@ -12,11 +13,13 @@ class Program
         Program p = new Program();
 
         Console.WriteLine("--TEST 1--\n");
-        p.test1();
+        //p.test1();
         Console.WriteLine("\n--TEST 2--\n");
-        p.test2();
+        //p.test2();
         Console.WriteLine("\n--TEST 3--\n");
-        p.test3();
+        //p.test3();
+        Console.WriteLine("\n--TEST 4--\n");
+        p.test4();
     }
 
     void test1()
@@ -41,5 +44,14 @@ class Program
         WebSocket webSocket = new WebSocket();
         Frame frame = webSocket.SendPing2();
         Console.WriteLine(frame);
+    }
+
+    void test4()
+    {
+        Frame frame = WebSocketClientService.ConstructClientFrame(FrameType.TEXT, "Hei på deg", 176827);
+        Console.WriteLine("Masked frame sendt from client to server:");
+        Console.WriteLine(frame);
+        Console.WriteLine("Unmasked frame decoded server-side:");
+        Console.WriteLine(frame.GetUnmaskedFrame());
     }
 }

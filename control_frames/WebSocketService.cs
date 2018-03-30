@@ -12,6 +12,18 @@ namespace WebSocketLib {
         
             return frame;
         }
+        
+
+        public static void ReadFrame(Frame frame)
+        {
+            if(frame.hasPayload)
+            {
+                if(!frame.Masked)
+                {
+                    //Drop websocket connection
+                }
+            }
+        }
 
     }
 }
