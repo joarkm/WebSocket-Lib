@@ -4,12 +4,15 @@ using System.Linq;
 using WebSocket.Constants;
 
 namespace WebSocket{
+
+    // This class is not intended to be used directly
+
     public class Frame {
     
-        public byte FIN { get;  set; } = 0x0;
-        public byte RSV1 { get; protected set; } = 0x0;
-        public byte RSV2 { get; protected set; } = 0x0;
-        public byte RSV3 { get; protected set; } = 0x0;
+        public byte FIN { get; private set; } = 0x0;
+        public byte RSV1 { get; private set; } = 0x0;
+        public byte RSV2 { get; private set; } = 0x0;
+        public byte RSV3 { get; private set; } = 0x0;
         /*
         /// Setter causes StackOverflow
 
@@ -26,45 +29,43 @@ namespace WebSocket{
         */
 
         public byte OpCode { get; private set; }
-        public bool hasOpCode { get; private set; }
+        
+        /* Has properties needed since we can't distinguish
+         * between a byte property that has not been set
+         * (defaults to 0) and a byte property that has 
+         * been set to 0 intentionally.
+         */
 
-        private void setFIN()
-        {
-            FIN = 0x1;
-        }
+        public bool hasPayload { get; private set; }
+
+        private void setFIN() { FIN = 0x1; }
 
         public Frame() {}
 
-        public Frame(bool fin, OpCode opcode) {
-            if(fin) setFIN();
+        public Frame(OpCode opcode) {
+            if(opcode == Constants.OpCode.CONNECTION_CLOSE)
+                setFIN(); 
             OpCode = (byte)opcode;
-            hasOpCode = true;
         }
 
         
-        public Frame(bool fin, byte opcode) {
-            if(fin) setFIN();
+        public Frame(byte opcode) {
+            if(opcode == (byte)Constants.OpCode.CONNECTION_CLOSE)
+                setFIN(); 
             OpCode = opcode;
-            hasOpCode = true;
         }
         
-        
+        private string ToString(OpCode opcode)
+        {
+            string res  =   ((Byte)opcode).ToString("x").PadLeft(1,'0');
+            res        +=   " (" + Enum.GetName( typeof(Constants.OpCode), opcode) + ')';
+            return res;
+        }
+
         public override string ToString()
         {
-            const string NOT_SET = "Not set";
-            Byte b = FIN;
-            string _FIN = b.ToString("x").PadLeft(1,'0');
-            
-            string _OpCode;
-            if(hasOpCode)
-            {
-                b = OpCode;
-                _OpCode = b.ToString("x").PadLeft(1,'0');
-            } else {
-                _OpCode = NOT_SET;
-            }
-            
-
+            string _FIN = ((Byte)FIN).ToString("x").PadLeft(1,'0');
+            string _OpCode = ToString((Constants.OpCode)OpCode);
             string res  =   $"FIN: {_FIN}\n"
                         +   $"Opcode: {_OpCode}";
             
