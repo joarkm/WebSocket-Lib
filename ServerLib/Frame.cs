@@ -6,7 +6,7 @@ using WebSocketLib.Constants;
 
 namespace WebSocketLib {
 
-    // This class is not intended to be used directly
+    // Todo: Make abstract and derive classes from
 
     public class Frame {
     
@@ -40,6 +40,18 @@ namespace WebSocketLib {
                 {
                     throw new ArgumentException("Please use a constructor that accepts payload data.");
                 }
+
+                case Constants.OpCode.BINARY:
+                
+                break;
+                
+                case Constants.OpCode.PING:
+                
+                break;
+
+                case Constants.OpCode.PONG:
+                
+                break;
 
                 case Constants.OpCode.CONNECTION_CLOSE:
                 setFIN();
