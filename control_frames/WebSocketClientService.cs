@@ -35,7 +35,6 @@ namespace WebSocketLib.Simulation {
         //For testing...
         public static Frame ConstructClientFrame(FrameType frameType, string payload, int mask_key)
         {
-            Frame frame = null;
             if(frameType == FrameType.TEXT)
             {
                 byte[] binaryPayload = Encoding.UTF8.GetBytes(payload);
