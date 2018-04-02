@@ -14,11 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebSocket-Lib.csproj" />
+    <ProjectReference Include="..\..\WebSocket-Lib\WebSocket-Lib.csproj" />
   </ItemGroup>
 
-  <PropertyGroup>
+  <!--<PropertyGroup>
+    <Company>OwnCorp</Company>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
 </Project>
