@@ -40,6 +40,7 @@ namespace WebSocketLib {
 
         public Frame() {}
         public Frame(byte[] payload) {
+            OpCode = (byte)(Constants.OpCode.BINARY);
             Payload = payload;
             PayloadLen = (byte)Payload.Length;
         }
@@ -47,6 +48,7 @@ namespace WebSocketLib {
             SetMask(mask_key);
         }
         public Frame(string payload) {
+            OpCode = (byte)(Constants.OpCode.TEXT);
             if (Encoding.UTF8.GetByteCount(payload) > 128)
                 throw new NotImplementedException("Handling payload exeeding the size of one frame is as of yet not implemented.");
             
