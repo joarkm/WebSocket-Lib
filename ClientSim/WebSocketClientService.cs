@@ -23,9 +23,9 @@ namespace WebSocketLib.Simulation {
 
                 Frame frame = null;
                 if(frameType == FrameType.BINARY)
-                    frame = new Frame(OpCode.BINARY, maskedPayload, mask_key);
+                    frame = new Frame(maskedPayload, mask_key);
                 else
-                    frame = new Frame(OpCode.TEXT, maskedPayload, mask_key);
+                    frame = new Frame(maskedPayload, mask_key);
                 return frame;
             }
             else 

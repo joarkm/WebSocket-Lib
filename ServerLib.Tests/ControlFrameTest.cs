@@ -6,9 +6,8 @@ using WebSocketLib.Constants;
 
 namespace ServerLib.Tests
 {
-    public class FrameTest
+    public class ControlFrameTest
     {
-
         [Fact]
         public void CanCreateTextFrame()
         {
@@ -21,6 +20,12 @@ namespace ServerLib.Tests
         {
             Exception ex = Record.Exception( () => new Frame("test frame", 1421) );
             Assert.Null(ex); //Assert exception not raised
+        }
+
+        [Fact]
+        public void CannotCreateClientControlFrameWithTooLongPayload()
+        {
+            Assert.Throws<ArgumentException>( () => new ControlFrame(new string('*', 126), 14412) );
         }
         
     }

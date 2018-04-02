@@ -8,7 +8,7 @@ namespace WebSocketLib {
         {
             Frame frame = null;
             if(frameType == FrameType.PING)
-                frame = new Frame(OpCode.PING);
+                frame = new PingFrame();
         
             return frame;
         }
